@@ -1,0 +1,9 @@
+Descriptions des paramètres:
+
+T2M: Temperature at 2 meters above ground level (°C)
+PRECTOT: Total precipitation (mm)
+RH2M: Relative humidity at 2 meters above ground level (%)
+WS2M: Wind speed at 2 meters above ground level (m/s)
+ALLSKY_SFC_SW_DWN: Downward solar radiation at the surface (W/m²)
+TMAX: Maximum Temperature (°C)
+TMIN: Minimum Temperature (°C)
