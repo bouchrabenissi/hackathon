@@ -1,20 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { DateRangePicker } from "@/components/date-range-picker";
+import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 export default function Home() {
-  const farmerName = "John";
+  const [farmerName, setFarmerName] = useState("");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  const [nasaData, setNasaData] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("farmerName");
+    if (storedName) {
+      setFarmerName(storedName);
+    }
+  }, []);
+
+  const handleDateRangeChange = (newDateRange: DateRange | undefined) => {
+    setDateRange(newDateRange);
+  };
+
+  const fetchNASAData = async () => {
+    if (!dateRange?.from || !dateRange?.to) return;
+
+    const lat = localStorage.getItem("farmerLat");
+    const lon = localStorage.getItem("farmerLon");
+
+    if (!lat || !lon) {
+      console.error("Latitude or longitude not found in local storage");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/py/get_nasa_data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lat: parseFloat(lat),
+          lon: parseFloat(lon),
+          start_date: format(dateRange.from, "yyyyMMdd"),
+          end_date: format(dateRange.to, "yyyyMMdd"),
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setNasaData(data);
+        // Process the NASA data and update the UI accordingly
+      } else {
+        console.error("Failed to fetch NASA data");
+      }
+    } catch (error) {
+      console.error("Error fetching NASA data:", error);
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 max-w-md mx-auto bg-background text-foreground">
       <h1 className="text-2xl font-bold mb-4">Hey {farmerName}</h1>
+
+      <DateRangePicker onDateRangeChange={handleDateRangeChange} />
+      <Button onClick={fetchNASAData} className="mt-4">
+        Fetch NASA Data
+      </Button>
 
       <section className="w-full mb-6">
         <h2 className="text-xl font-semibold mb-2">
@@ -53,6 +109,17 @@ export default function Home() {
             severity="warning"
           />
         </div>
+      </section>
+
+      <section className="w-full mb-6">
+        <h2 className="text-xl font-semibold mb-2">NASA Data</h2>
+        {nasaData ? (
+          <pre>{JSON.stringify(nasaData, null, 2)}</pre>
+        ) : (
+          <p>
+            No NASA data available. Please select a date range and fetch data.
+          </p>
+        )}
       </section>
 
       <section className="w-full mb-6">
@@ -130,7 +197,7 @@ const SunIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     />
     <path
       fill="currentColor"
-      d="M4.398 4.398a.75.75 0 0 1 1.061 0l.393.393a.75.75 0 0 1-1.06 1.06l-.394-.392a.75.75 0 0 1 0-1.06m15.202 0a.75.75 0 0 1 0 1.06l-.392.393a.75.75 0 0 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.06 0m-1.453 13.748a.75.75 0 0 1 1.061 0l.393.393a.75.75 0 0 1-1.06 1.06l-.394-.392a.75.75 0 0 1 0-1.06m-12.295 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 1 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.06 0"
+      d="M4.398 4.398a.75.75 0 0 1 1.061 0l.393.393a.75.75 0 0 1-1.06 1.06l-.394-.392a.75.75 0 0 1 0-1.06m15.202 0a.75.75 0 0 1 0 1.06l-.392.393a.75.75 0 0 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.06 0"
       opacity=".5"
     />
   </svg>

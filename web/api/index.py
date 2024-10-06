@@ -15,6 +15,10 @@ load_dotenv()
 
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
 
+# Load the NASA POWER data from CSV
+csv_path = os.path.join(os.path.dirname(__file__), "nasa_power_data_with_date.csv")
+nasa_power_df = pd.read_csv(csv_path, parse_dates=['date'])
+
 # NASA POWER API Endpoint
 NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 
@@ -22,8 +26,6 @@ NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 OPEN_CAGE_API_KEY = os.getenv('OPEN_CAGE_API_KEY')
 if OPEN_CAGE_API_KEY is None:
     print("Warning: OPEN_CAGE_API_KEY environment variable is not set")
-    # You could set a default behavior here, or continue with reduced functionality
-
 
 class CityInput(BaseModel):
     city_name: str
@@ -42,6 +44,13 @@ class UserInput(BaseModel):
 
 class LocationInput(BaseModel):
     location: str
+
+
+class NASADataInput(BaseModel):
+    lat: float
+    lon: float
+    start_date: str
+    end_date: str
 
 
 @app.get("/api/py/")
@@ -73,27 +82,24 @@ async def get_lat_lon(location: LocationInput):
 
 
 @app.post("/api/py/get_nasa_data")
-def get_nasa_data(city_input: CityInput):
-    print(f"POST /api/py/get_nasa_data endpoint hit with input: {city_input}")
-    lat_lon = get_lat_lon(LocationInput(location=city_input.city_name))
+def get_nasa_data(nasa_input: NASADataInput):
+    print(f"POST /api/py/get_nasa_data endpoint hit with input: {nasa_input}")
+
     params = {
-        "start": city_input.start_date,
-        "end": city_input.end_date,
-        "latitude": lat_lon["lat"],
-        "longitude": lat_lon["lon"],
-        "parameters": "T2M,PRECTOTCORR,RH2M,WS2M,ALLSKY_SFC_SW_DWN,T2M_MAX,T2M_MIN,PS,QV10M,SNODP,TS,U10M,U2M,U50M,V10M,V2M,PSC,WD10M,WD2M,WS10M",
+        "start": nasa_input.start_date,
+        "end": nasa_input.end_date,
+        "latitude": nasa_input.lat,
+        "longitude": nasa_input.lon,
+        "parameters": "T2M,PRECTOTCORR,RH2M,WS2M,ALLSKY_SFC_SW_DWN,T2M_MAX,T2M_MIN,PS,QV10M,U10M,V10M",
         "community": "AG",
-        "format": "JSON",
-        "site-elevation": "35"
+        "format": "JSON"
     }
-    print(f"Requesting NASA data with params: {params}")
+
     response = requests.get(NASA_POWER_URL, params=params)
     if response.status_code == 200:
         data = response.json()
-        print("NASA data retrieved successfully")
-        return pd.DataFrame(data['properties']['parameter']).to_dict(orient="records")
+        return data['properties']['parameter']
     else:
-        print(f"Error fetching NASA data: {response.status_code}")
         raise HTTPException(status_code=response.status_code,
                             detail=f"Error fetching data from NASA: {response.status_code}")
 
@@ -175,7 +181,8 @@ async def process_user_input(user_input: UserInput = Body(...)):
         city_input = CityInput(city_name=user_input.location, start_date=(datetime.now(
         ) - timedelta(days=30)).strftime("%Y%m%d"), end_date=datetime.now().strftime("%Y%m%d"))
         lat_lon = get_lat_lon(LocationInput(location=user_input.location))
-        nasa_data = get_nasa_data(city_input)
+        nasa_data = get_nasa_data(NASADataInput(
+            start_date=city_input.start_date, end_date=city_input.end_date))
         recommendations = generate_recommendations(
             PredictionInput(data=nasa_data))
         message = f"Hello {user_input.name}! Here are your personalized crop care recommendations for {
@@ -275,16 +282,20 @@ def temperature_recommendations(temperature):
 
 
 @app.post("/api/py/get_chart_data")
-def get_chart_data(city_input: CityInput):
-    print(f"POST /api/py/get_chart_data endpoint hit with input: {city_input}")
-    nasa_data = get_nasa_data(city_input)
-    df = pd.DataFrame(nasa_data)
-    df['date'] = pd.to_datetime(df.index)
+def get_chart_data(nasa_input: NASADataInput):
+    print(f"POST /api/py/get_chart_data endpoint hit with input: {nasa_input}")
 
-    temperature_data = process_temperature_data(df)
-    precipitation_data = process_precipitation_data(df)
-    wind_speed_data = process_wind_speed_data(df)
-    solar_radiation_data = process_solar_radiation_data(df)
+    # Filter the data based on the input date range
+    mask = (nasa_power_df['date'] >= nasa_input.start_date) & (nasa_power_df['date'] <= nasa_input.end_date)
+    filtered_data = nasa_power_df.loc[mask]
+
+    if filtered_data.empty:
+        raise HTTPException(status_code=404, detail="No data found for the specified date range")
+
+    temperature_data = process_temperature_data(filtered_data)
+    precipitation_data = process_precipitation_data(filtered_data)
+    wind_speed_data = process_wind_speed_data(filtered_data)
+    solar_radiation_data = process_solar_radiation_data(filtered_data)
 
     return {
         "temperature": temperature_data,
