@@ -54,14 +54,14 @@ export default function InitialPage() {
         alt="Male farmer"
         width={175}
         height={175}
-        className="absolute bottom-20 left-0"
+        className="absolute bottom-24 left-0"
       />
       <Image
         src="/images/female-farmer.webp"
         alt="Female farmer"
         width={175}
         height={175}
-        className="absolute bottom-20 right-0"
+        className="absolute bottom-24 right-0"
       />
 
       <main className="flex min-h-screen flex-col items-center justify-center p-4 max-w-md mx-auto bg-background text-foreground">
