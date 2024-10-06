@@ -1,0 +1,21 @@
+﻿Précipitations
+Type de graphe: bar chart 
+Input : PRECTOTCORR (Précipitations Totales), date
+Output : Graphique à barres montrant le nombre de précipitation (PRECTOT > 0) 
+Description : Cette visualisation montre la fréquence des jours de pluie ____________________________________________________________________________
+Tempétature 
+Input : T2M (Température à 2 mètres)
+Output : Jauge représentant la température moyenne dans une plage définie (par exemple, entre 0°C et 40°C).
+Description : La jauge indique visuellement si la température est faible, modérée ou élevée, selon une plage définie. C'est utile pour voir rapidement si la température actuelle est dans une zone critique pour les cultures.
+
+
+____________________________________________________________________________
+Humidité:
+        
+* Type de graphe: Line chart
+* Input : RH2M (Humidité relative à 2 mètres), date
+* Output : Un graphique linéaire montrant l’évolution de l’humidité relative au fil du temps.
+* Description : Cette visualisation permet de suivre comment l'humidité relative change dans une période donnée. Une humidité élevée indique souvent des conditions favorables pour la culture, tandis qu'une humidité trop basse peut être un signe de sécheresse.
+
+
+____________________________________________________________________________
