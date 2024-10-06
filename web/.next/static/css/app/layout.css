@@ -579,8 +579,20 @@ body{
 .pointer-events-none{
   pointer-events: none;
 }
+.absolute{
+  position: absolute;
+}
 .relative{
   position: relative;
+}
+.bottom-20{
+  bottom: 5rem;
+}
+.left-0{
+  left: 0px;
+}
+.right-0{
+  right: 0px;
 }
 .mx-auto{
   margin-left: auto;
@@ -620,11 +632,11 @@ body{
 .grid{
   display: grid;
 }
-.aspect-video{
-  aspect-ratio: 16 / 9;
-}
 .aspect-square{
   aspect-ratio: 1 / 1;
+}
+.aspect-video{
+  aspect-ratio: 16 / 9;
 }
 .h-10{
   height: 2.5rem;
@@ -649,9 +661,6 @@ body{
 }
 .h-9{
   height: 2.25rem;
-}
-.h-\[400px\]{
-  height: 400px;
 }
 .h-\[812px\]{
   height: 812px;
@@ -695,9 +704,6 @@ body{
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
-.max-w-3xl{
-  max-width: 48rem;
-}
 .max-w-md{
   max-width: 28rem;
 }
@@ -716,9 +722,6 @@ body{
 .cursor-pointer{
   cursor: pointer;
 }
-.grid-cols-1{
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
 .flex-col{
   flex-direction: column;
 }
@@ -736,9 +739,6 @@ body{
 }
 .items-stretch{
   align-items: stretch;
-}
-.justify-start{
-  justify-content: flex-start;
 }
 .justify-center{
   justify-content: center;
@@ -921,9 +921,8 @@ body{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
-.px-0{
-  padding-left: 0px;
-  padding-right: 0px;
+.pb-0{
+  padding-bottom: 0px;
 }
 .pb-3{
   padding-bottom: 0.75rem;
@@ -933,9 +932,6 @@ body{
 }
 .pt-3{
   padding-top: 0.75rem;
-}
-.pb-0{
-  padding-bottom: 0px;
 }
 .text-center{
   text-align: center;
@@ -951,6 +947,10 @@ body{
   font-size: 1.875rem;
   line-height: 2.25rem;
 }
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -962,10 +962,6 @@ body{
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.text-4xl{
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 .font-bold{
   font-weight: 700;
@@ -1019,13 +1015,6 @@ body{
 }
 .text-secondary-foreground{
   color: hsl(var(--secondary-foreground));
-}
-.text-gray-500{
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-.text-foreground\/50{
-  color: hsl(var(--foreground) / 0.5);
 }
 .underline-offset-4{
   text-underline-offset: 4px;
@@ -1227,13 +1216,6 @@ body{
 .dark\:text-orange-300:is(.dark *){
   --tw-text-opacity: 1;
   color: rgb(253 186 116 / var(--tw-text-opacity));
-}
-
-@media (min-width: 768px){
-
-  .md\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 .\[\&\>svg\+div\]\:translate-y-\[-3px\]>svg+div{

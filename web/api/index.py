@@ -19,30 +19,38 @@ OPEN_CAGE_API_KEY = os.environ.get('OPEN_CAGE_API_KEY')
 if OPEN_CAGE_API_KEY is None:
     raise ValueError("OPEN_CAGE_API_KEY environment variable is not set")
 
+
 class CityInput(BaseModel):
     city_name: str
     start_date: str
     end_date: str
 
+
 class PredictionInput(BaseModel):
     data: List[dict]
+
 
 class UserInput(BaseModel):
     name: str
     location: str
 
+
 class LocationInput(BaseModel):
     location: str
+
 
 @app.get("/api/py/")
 def hello_fast_api():
     print("GET /api/py/ endpoint hit")
     return {"message": "Hello from FastAPI"}
 
+
 @app.post("/api/py/get_lat_lon")
 async def get_lat_lon(location: LocationInput):
-    print(f"POST /api/py/get_lat_lon endpoint hit with location: {location.location}")
-    url = f"https://api.opencagedata.com/geocode/v1/json?q={location.location}&key={OPEN_CAGE_API_KEY}"
+    print(
+        f"POST /api/py/get_lat_lon endpoint hit with location: {location.location}")
+    url = f"https://api.opencagedata.com/geocode/v1/json?q={
+        location.location}&key={OPEN_CAGE_API_KEY}"
     response = requests.get(url)
     data = response.json()
     if data['results']:
@@ -55,6 +63,7 @@ async def get_lat_lon(location: LocationInput):
     else:
         print(f"Location not found for: {location.location}")
         raise HTTPException(status_code=404, detail="Location not found")
+
 
 @app.post("/api/py/get_nasa_data")
 def get_nasa_data(city_input: CityInput):
@@ -78,22 +87,29 @@ def get_nasa_data(city_input: CityInput):
         return pd.DataFrame(data['properties']['parameter']).to_dict(orient="records")
     else:
         print(f"Error fetching NASA data: {response.status_code}")
-        raise HTTPException(status_code=response.status_code, detail=f"Error fetching data from NASA: {response.status_code}")
+        raise HTTPException(status_code=response.status_code,
+                            detail=f"Error fetching data from NASA: {response.status_code}")
+
 
 @app.post("/api/py/train_model")
 def train_model(data: List[dict]):
-    print(f"POST /api/py/train_model endpoint hit with {len(data)} data points")
+    print(
+        f"POST /api/py/train_model endpoint hit with {len(data)} data points")
     df = pd.DataFrame(data)
     df = df.dropna()
-    required_features = ['PRECTOTCORR', 'RH2M', 'WS2M', 'T2M_MAX', 'T2M_MIN', 'PS', 'QV10M', 'U10M', 'V10M', 'ALLSKY_SFC_SW_DWN']
-    available_features = [feature for feature in required_features if feature in df.columns]
+    required_features = ['PRECTOTCORR', 'RH2M', 'WS2M', 'T2M_MAX',
+                         'T2M_MIN', 'PS', 'QV10M', 'U10M', 'V10M', 'ALLSKY_SFC_SW_DWN']
+    available_features = [
+        feature for feature in required_features if feature in df.columns]
     if len(available_features) < 2:
         print("Not enough features to train the model")
-        raise HTTPException(status_code=400, detail="Not enough features to train the model")
+        raise HTTPException(
+            status_code=400, detail="Not enough features to train the model")
     X = df[available_features]
     threshold_temp = 20
     y = (df['T2M'] >= threshold_temp).astype(int)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42)
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
@@ -107,18 +123,23 @@ def train_model(data: List[dict]):
         "classification_report": report
     }
 
+
 @app.post("/api/py/generate_recommendations")
 def generate_recommendations(prediction_input: PredictionInput):
-    print(f"POST /api/py/generate_recommendations endpoint hit with {len(prediction_input.data)} data points")
+    print(f"POST /api/py/generate_recommendations endpoint hit with {
+          len(prediction_input.data)} data points")
     df = pd.DataFrame(prediction_input.data)
     model_result = train_model(prediction_input.data)
     model = model_result["model"]
     latest_data = df.iloc[-1]
-    required_features = ['PRECTOTCORR', 'RH2M', 'WS2M', 'T2M_MAX', 'T2M_MIN', 'PS', 'QV10M', 'U10M', 'V10M', 'ALLSKY_SFC_SW_DWN']
-    available_features = [feature for feature in required_features if feature in df.columns]
+    required_features = ['PRECTOTCORR', 'RH2M', 'WS2M', 'T2M_MAX',
+                         'T2M_MIN', 'PS', 'QV10M', 'U10M', 'V10M', 'ALLSKY_SFC_SW_DWN']
+    available_features = [
+        feature for feature in required_features if feature in df.columns]
     if len(available_features) < 2:
         print("Not enough features to generate recommendations")
-        raise HTTPException(status_code=400, detail="Not enough features to generate recommendations")
+        raise HTTPException(
+            status_code=400, detail="Not enough features to generate recommendations")
     X_latest = latest_data[available_features].values.reshape(1, -1)
     predicted_condition = model.predict(X_latest)[0]
     recommendations = []
@@ -139,15 +160,19 @@ def generate_recommendations(prediction_input: PredictionInput):
         "classification_report": model_result["classification_report"]
     }
 
+
 @app.post("/api/py/")
 async def process_user_input(user_input: UserInput = Body(...)):
     print(f"POST /api/py/ endpoint hit with user input: {user_input}")
     try:
-        city_input = CityInput(city_name=user_input.location, start_date=(datetime.now() - timedelta(days=30)).strftime("%Y%m%d"), end_date=datetime.now().strftime("%Y%m%d"))
+        city_input = CityInput(city_name=user_input.location, start_date=(datetime.now(
+        ) - timedelta(days=30)).strftime("%Y%m%d"), end_date=datetime.now().strftime("%Y%m%d"))
         lat_lon = get_lat_lon(LocationInput(location=user_input.location))
         nasa_data = get_nasa_data(city_input)
-        recommendations = generate_recommendations(PredictionInput(data=nasa_data))
-        message = f"Hello {user_input.name}! Here are your personalized crop care recommendations for {user_input.location}:\n\n"
+        recommendations = generate_recommendations(
+            PredictionInput(data=nasa_data))
+        message = f"Hello {user_input.name}! Here are your personalized crop care recommendations for {
+            user_input.location}:\n\n"
         if recommendations["predicted_condition"] == "favorable":
             message += "The current conditions are favorable for your crops. "
         else:
@@ -155,13 +180,16 @@ async def process_user_input(user_input: UserInput = Body(...)):
         message += "Here are some specific recommendations:\n\n"
         for rec in recommendations["recommendations"]:
             message += f"- {rec}\n"
-        print(f"Returning recommendations for {user_input.name} in {user_input.location}")
+        print(f"Returning recommendations for {
+              user_input.name} in {user_input.location}")
         return {"message": message}
     except Exception as e:
         print(f"Error processing user input: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # Helper functions for recommendations
+
+
 def wind_speed_recommendations(wind_speed):
     print(f"Generating wind speed recommendation for {wind_speed} km/h")
     wind_speed = wind_speed * 3.6  # Convert from m/s to km/h
@@ -178,6 +206,7 @@ def wind_speed_recommendations(wind_speed):
     else:
         return "Please enter a valid wind speed."
 
+
 def humidity_recommendations(relative_humidity):
     print(f"Generating humidity recommendation for {relative_humidity}%")
     if relative_humidity == 100:
@@ -191,8 +220,10 @@ def humidity_recommendations(relative_humidity):
     else:
         return "Please enter a valid relative humidity percentage."
 
+
 def solar_radiation_recommendations(solar_irradiance):
-    print(f"Generating solar radiation recommendation for {solar_irradiance} W/m^2")
+    print(f"Generating solar radiation recommendation for {
+          solar_irradiance} W/m^2")
     if solar_irradiance >= 1000:
         return "Extreme radiation: High temperatures expected. Increase irrigation and provide shade."
     elif 900 <= solar_irradiance < 1000:
@@ -204,8 +235,10 @@ def solar_radiation_recommendations(solar_irradiance):
     else:
         return "Enter a valid solar irradiance value."
 
+
 def precipitation_recommendations(precipitation_rate):
-    print(f"Generating precipitation recommendation for {precipitation_rate} mm/hr")
+    print(f"Generating precipitation recommendation for {
+          precipitation_rate} mm/hr")
     if precipitation_rate > 2:
         return "Extreme precipitation: Rapid erosion and waterlogging expected. Manage drainage to prevent flooding."
     elif 1 <= precipitation_rate <= 2:
@@ -216,6 +249,7 @@ def precipitation_recommendations(precipitation_rate):
         return "Low precipitation: Favorable for planting. Consider irrigation if moisture drops."
     else:
         return "Enter a valid precipitation rate."
+
 
 def temperature_recommendations(temperature):
     print(f"Generating temperature recommendation for {temperature}°C")
@@ -231,6 +265,7 @@ def temperature_recommendations(temperature):
         return "Moderate: Generally manageable for growth. Continue regular irrigation."
     else:
         return "Enter a valid temperature value."
+
 
 @app.post("/api/py/get_chart_data")
 def get_chart_data(city_input: CityInput):
@@ -251,6 +286,7 @@ def get_chart_data(city_input: CityInput):
         "solarRadiation": solar_radiation_data
     }
 
+
 def process_temperature_data(df):
     return [
         {
@@ -262,6 +298,7 @@ def process_temperature_data(df):
         for _, row in df.iterrows()
     ]
 
+
 def process_precipitation_data(df):
     return [
         {
@@ -271,6 +308,7 @@ def process_precipitation_data(df):
         for _, row in df.iterrows()
     ]
 
+
 def process_wind_speed_data(df):
     return [
         {
@@ -279,6 +317,7 @@ def process_wind_speed_data(df):
         }
         for _, row in df.iterrows()
     ]
+
 
 def process_solar_radiation_data(df):
     return [
