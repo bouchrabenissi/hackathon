@@ -1,0 +1,22 @@
+Descriptions des paramètres:
+
+T2M: Temperature at 2 meters above ground level (°C)
+PRECTOT: Total precipitation (mm)
+RH2M: Relative humidity at 2 meters above ground level (%)
+WS2M: Wind speed at 2 meters above ground level (m/s)
+ALLSKY_SFC_SW_DWN: Downward solar radiation at the surface (W/m²)
+TMAX: Maximum Temperature (°C)
+TMIN: Minimum Temperature (°C)
+PS: Surface Pressure (Pa)
+QV10M: Specific Humidity at 10 meters
+SNODP: Snow Depth (cm)
+TS: Surface Skin Temperature (K)
+U10M: Zonal Wind Speed at 10 meters (m/s)
+U2M: Zonal Wind Speed at 2 meters (m/s)
+U50M: Zonal Wind Speed at 50 meters (m/s)
+V10M: Meridional Wind Speed at 10 meters (m/s)
+V2M: Meridional Wind Speed at 2 meters (m/s)
+PSC: Probability of Scattering Cloud (%)
+WD10M: Wind Direction at 10 meters (degrees)
+WD2M: Wind Direction at 2 meters (degrees)
+WS10M: Wind Speed at 10 meters (m/s)
