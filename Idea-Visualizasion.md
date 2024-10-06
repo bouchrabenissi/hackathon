@@ -1,7 +1,7 @@
 # Précipitations:
 
 - __Type de graphe__: bar chart 
-- __Input__: PRECTOTCORR (Précipitations Totales), date
+- __Input__: PRECTOT (Précipitations Totales), date
 - __Output__: Graphique à barres montrant le nombre de précipitation (PRECTOT > 0) 
 - __Description__: Cette visualisation montre la fréquence des jours de pluie 
 - _Chart title_: "Total Precipitation Frequency"
