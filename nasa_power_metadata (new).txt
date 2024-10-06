@@ -23,20 +23,20 @@ WS10M: Wind Speed at 10 meters (m/s)
 
 
 
-1. __T2M (Temperature at 2 meters above ground level)__: This tells us how warm or cold the air is about two meters above the ground, which is about the height of a person. If it says 20°C, it’s like a nice, warm day.
-2. __PRECTOT (Total precipitation)__: This tells us how much rain (or snow) has fallen. If it says 10 mm, it means there was a little bit of rain, like the amount in a small cup.
-3. __RH2M (Relative humidity at 2 meters above ground level)__: This is a way to tell how much moisture is in the air. If it’s 50%, it’s like saying half of the air is made up of water. On a hot day, if this number is high, it can feel sticky or sweaty!
-4. __WS2M (Wind speed at 2 meters above ground level)__: This tells us how fast the wind is blowing about two meters above the ground. If it says 5 m/s, it means the wind is blowing quickly, like when you feel a nice breeze on your face.
-5. __ALLSKY_SFC_SW_DWN (Downward solar radiation at the surface)__: This tells us how much sunlight is hitting the ground. If it says 400 W/m², it means a lot of sunlight is shining down, like on a bright, sunny day.
-6. __TMAX (Maximum Temperature)__: This is the hottest temperature of the day. If it’s 30°C, it was really warm at some point during the day.
-7. __TMIN (Minimum Temperature)__: This is the coldest temperature of the day. If it says 10°C, it means it was pretty chilly during the night.
-8. __PS (Surface Pressure)__: This tells us about the weight of the air above us. If the pressure is high, it means the air is heavy, which can help keep the weather clear.
-9. __QV10M (Specific Humidity at 10 meters)__: This is like RH2M but tells us how much moisture is in the air at a height of 10 meters.
-10. __SNODP (Snow Depth)__: This tells us how deep the snow is on the ground. If it says 15 cm, it means there’s a little bit of snow covering the ground.
-11. __TS (Surface Skin Temperature)__: This tells us how warm the ground is. If it’s 25 K (Kelvin), we need to convert it to Celsius, but it helps us know if the ground is warm or cold.
-12. __U10M, U2M, U50M (Zonal Wind Speed)__: These tell us how fast the wind is blowing in a straight line (west to east) at different heights (10, 2, and 50 meters above the ground).
-13. __V10M, V2M (Meridional Wind Speed)__: These tell us how fast the wind is blowing up and down (north to south) at different heights (10 and 2 meters above the ground).
-14. __PSC (Probability of Scattering Cloud)__: This tells us how likely it is that there are clouds in the sky. If it’s 70%, it means it’s pretty likely you’ll see clouds.
-15. __WD10M, WD2M (Wind Direction)__: These tell us where the wind is coming from at 10 and 2 meters above the ground. If it says 90°, it means the wind is coming from the east.
-16. __WS10M (Wind Speed at 10 meters)__: This tells us how fast the wind is blowing at a height of 10 meters.
+1. T2M (Temperature at 2 meters above ground level): This tells us how warm or cold the air is about two meters above the ground, which is about the height of a person. If it says 20°C, it’s like a nice, warm day.
+2. PRECTOT (Total precipitation): This tells us how much rain (or snow) has fallen. If it says 10 mm, it means there was a little bit of rain, like the amount in a small cup.
+3. RH2M (Relative humidity at 2 meters above ground level): This is a way to tell how much moisture is in the air. If it’s 50%, it’s like saying half of the air is made up of water. On a hot day, if this number is high, it can feel sticky or sweaty!
+4. WS2M (Wind speed at 2 meters above ground level): This tells us how fast the wind is blowing about two meters above the ground. If it says 5 m/s, it means the wind is blowing quickly, like when you feel a nice breeze on your face.
+5. ALLSKY_SFC_SW_DWN (Downward solar radiation at the surface): This tells us how much sunlight is hitting the ground. If it says 400 W/m², it means a lot of sunlight is shining down, like on a bright, sunny day.
+6. TMAX (Maximum Temperature): This is the hottest temperature of the day. If it’s 30°C, it was really warm at some point during the day.
+7. TMIN (Minimum Temperature): This is the coldest temperature of the day. If it says 10°C, it means it was pretty chilly during the night.
+8. PS (Surface Pressure): This tells us about the weight of the air above us. If the pressure is high, it means the air is heavy, which can help keep the weather clear.
+9. QV10M (Specific Humidity at 10 meters): This is like RH2M but tells us how much moisture is in the air at a height of 10 meters.
+10. SNODP (Snow Depth): This tells us how deep the snow is on the ground. If it says 15 cm, it means there’s a little bit of snow covering the ground.
+11. TS (Surface Skin Temperature): This tells us how warm the ground is. If it’s 25 K (Kelvin), we need to convert it to Celsius, but it helps us know if the ground is warm or cold.
+12. U10M, U2M, U50M (Zonal Wind Speed): These tell us how fast the wind is blowing in a straight line (west to east) at different heights (10, 2, and 50 meters above the ground).
+13. V10M, V2M (Meridional Wind Speed): These tell us how fast the wind is blowing up and down (north to south) at different heights (10 and 2 meters above the ground).
+14. PSC (Probability of Scattering Cloud): This tells us how likely it is that there are clouds in the sky. If it’s 70%, it means it’s pretty likely you’ll see clouds.
+15. WD10M, WD2M (Wind Direction): These tell us where the wind is coming from at 10 and 2 meters above the ground. If it says 90°, it means the wind is coming from the east.
+16. WS10M (Wind Speed at 10 meters): This tells us how fast the wind is blowing at a height of 10 meters.
 
