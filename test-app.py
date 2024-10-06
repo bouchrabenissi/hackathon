@@ -6,12 +6,15 @@ from datetime import datetime, timedelta
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
+import os
 
 # NASA POWER API Endpoint
 NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 
 # API Key for OpenCage (you need to sign up to get your own key)
-OPEN_CAGE_API_KEY = 'f2a2c8e0de9147c28956f29a4fbbbc4e'
+OPEN_CAGE_API_KEY = os.environ.get('OPEN_CAGE_API_KEY')
+if OPEN_CAGE_API_KEY is None:
+    raise ValueError("OPEN_CAGE_API_KEY environment variable is not set")
 
 # Function to get latitude and longitude of a city via OpenCage API
 def get_lat_lon(city_name):
@@ -57,17 +60,17 @@ def get_nasa_data(lat, lon, start_date, end_date):
 # Function to visualize climatic trends
 def visualize_data(df):
     plt.figure(figsize=(12, 8))
-    
+
     # Plot average, max, and min temperatures
     plt.subplot(2, 1, 1)
     plt.plot(df['Date'], df['T2M'], label='Temperature (°C)', color='blue')
-    
+
     if 'TMAX' in df.columns:
         plt.plot(df['Date'], df['TMAX'], label='Max Temperature (°C)', color='red')
-    
+
     if 'TMIN' in df.columns:
         plt.plot(df['Date'], df['TMIN'], label='Min Temperature (°C)', color='green')
-    
+
     plt.title('Temperatures (°C)')
     plt.legend()
 
@@ -76,7 +79,7 @@ def visualize_data(df):
         plt.bar(df['Date'], df['PRECTOT'], label='Precipitation (mm)', color='orange', alpha=0.5)
         plt.title('Precipitation (mm)')
         plt.legend()
-    
+
     st.pyplot(plt)
 
 # Function to train predictive model for classification
@@ -96,7 +99,7 @@ def train_classification_model(df):
     X = df[available_features]
     # Create a binary classification target variable based on temperature
     # Define a threshold temperature, for example, 20°C
-    threshold_temp = 20  
+    threshold_temp = 20
     y = (df['T2M'] >= threshold_temp).astype(int)  # 1 for favorable, 0 for unfavorable
 
     # Split data into training and test sets
@@ -123,16 +126,16 @@ def wind_speed_recommendations(wind_speed):
     wind_speed = wind_speed * 3.6  # Convert from m/s to km/h
     if 0 <= wind_speed < 50:
         return ("Light to moderate wind speed: Monitor for light erosion and protect sensitive crops.")
-    
+
     elif 50 <= wind_speed < 60:
         return ("Moderate to strong wind speed: Check for damage and use windbreaks.")
-    
+
     elif 70 <= wind_speed < 90:
         return ("Strong wind speed: Expect crop damage. Take immediate action to secure plants.")
-    
+
     elif wind_speed >= 100:
         return ("Extreme wind speed: Prepare for significant erosion and evacuate at-risk crops.")
-    
+
     elif 120 <= wind_speed <= 250:
         return ("Very extreme: Catastrophic damage possible. Take emergency measures and evacuate.")
 
@@ -142,16 +145,16 @@ def wind_speed_recommendations(wind_speed):
 def humidity_recommendations(relative_humidity):
     if relative_humidity == 100:
         return ("Extreme humidity: Expect soil saturation and possible flooding. Monitor for soil erosion and root rot.")
-    
+
     elif 80 < relative_humidity < 100:
         return ("High humidity: Significant moisture retention may lead to fungal growth. Improve drainage and monitor plants.")
-    
+
     elif 50 <= relative_humidity <= 80:
         return ("Moderate humidity: Generally favorable for growth. Maintain regular watering and check soil moisture.")
-    
+
     elif relative_humidity < 50:
         return ("Low humidity: Soil moisture may evaporate quickly. Increase irrigation to support crop growth.")
-    
+
     else:
         return "Please enter a valid relative humidity percentage."
 
@@ -215,7 +218,7 @@ def generate_recommendations(df, model):
     # Check if required columns are available for prediction
     required_features = ['PRECTOTCORR', 'RH2M', 'WS2M', 'T2M_MAX', 'T2M_MIN', 'PS', 'QV10M', 'U10M', 'V10M', 'ALLSKY_SFC_SW_DWN']
     available_features = [feature for feature in required_features if feature in df.columns]
-    
+
     # Ensure enough features are available to make a prediction
     if len(available_features) < 2:
         st.error("Not enough features to generate recommendations.")
@@ -230,7 +233,7 @@ def generate_recommendations(df, model):
     else:
         st.warning("Agronomic conditions are unfavorable.")
         st.write("Recommendations:")
-        
+
         # Call recommendation functions
         wind_speed_recommendation = wind_speed_recommendations(latest_data['WS2M'] * 3.6)  # Convert to km/h
         humidity_recommendation = humidity_recommendations(latest_data['RH2M'])
@@ -257,30 +260,30 @@ def generate_recommendations(df, model):
 # Main Streamlit application
 def main():
     st.title("Climate Prediction Tool for Farmers")
-    
+
     # Choose data retrieval method
     data_choice = st.radio("How would you like to obtain the data?", ('API', 'Upload a CSV file'))
-    
+
     if data_choice == 'API':
         # User input: city
         city_name = st.text_input("Enter the name of your city", "Paris")
-        
+
         # Date selection
         start_date = st.date_input("Select Start Date", datetime(2020, 1, 1))
         end_date = st.date_input("Select End Date", datetime(2024, 1, 31))
-        
+
         if st.button("Get data via API"):
             lat, lon = get_lat_lon(city_name)
-            
+
             if lat and lon:
                 historical_df = get_nasa_data(lat, lon, start_date.strftime("%Y%m%d"), end_date.strftime("%Y%m%d"))
-                
+
                 if historical_df is not None:
                     st.write("Historical Weather Data:")
                     st.dataframe(historical_df)
-                    
+
                     visualize_data(historical_df)
-                    
+
                     model = train_classification_model(historical_df)
                     if model:
                         generate_recommendations(historical_df, model)
@@ -291,9 +294,9 @@ def main():
             historical_df = pd.read_csv(uploaded_file)
             st.write("Historical Weather Data:")
             st.dataframe(historical_df)
-            
+
             visualize_data(historical_df)
-            
+
             model = train_classification_model(historical_df)
             if model:
                 generate_recommendations(historical_df, model)
