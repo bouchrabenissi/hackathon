@@ -52,5 +52,4 @@ yarn-error.log*
 *.swp
 
 # Large media files (if any)
-*.txt
 *.pdf
