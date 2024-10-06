@@ -2,7 +2,7 @@
 
 - __Type de graphe__: bar chart 
 - __Input__: PRECTOTCORR (Précipitations Totales), date
-- __Output__: Graphique à barres montrant le nombre de précipitation (PRECTOTCORR > 0) 
+- __Output__: Graphique à barres montrant le nombre de précipitation (PRECTOT > 0) 
 - __Description__: Cette visualisation montre la fréquence des jours de pluie 
 - _Chart title_: "Total Precipitation Frequency"
   _X-axis_: "Date" (or "Days" if you're showing a range of days)
@@ -31,7 +31,7 @@ ____________________________________________________________________________
 # All together:
 
 - __Type de graphe__: Radar Chart
-- __Input__: T2M, WS2M, RH2M, PRECTOTCORR, ALLSKY_SFC_SW_DWN
+- __Input__: T2M, WS2M, RH2M, PRECTOT, ALLSKY_SFC_SW_DWN
 - __Output__: Radar Chart
 - __Description__: This radar chart gives farmers a clear view of weather conditions, helping with decisions on planting, irrigation, and crop protection. It visualizes key factors like temperature, wind speed, humidity, precipitation, and solar radiation, making it easy to assess if the weather is favorable or if adjustments are needed. 
 - _Chart title_: Weather Conditions Overview for Farmers
