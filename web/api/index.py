@@ -8,6 +8,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 import os
 from typing import List, Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
 
@@ -15,9 +19,10 @@ app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
 NASA_POWER_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 
 # API Key for OpenCage (you need to sign up to get your own key)
-OPEN_CAGE_API_KEY = os.environ.get('OPEN_CAGE_API_KEY')
+OPEN_CAGE_API_KEY = os.getenv('OPEN_CAGE_API_KEY')
 if OPEN_CAGE_API_KEY is None:
-    raise ValueError("OPEN_CAGE_API_KEY environment variable is not set")
+    print("Warning: OPEN_CAGE_API_KEY environment variable is not set")
+    # You could set a default behavior here, or continue with reduced functionality
 
 
 class CityInput(BaseModel):
@@ -47,6 +52,8 @@ def hello_fast_api():
 
 @app.post("/api/py/get_lat_lon")
 async def get_lat_lon(location: LocationInput):
+    if OPEN_CAGE_API_KEY is None:
+        raise HTTPException(status_code=500, detail="OpenCage API key is not configured")
     print(
         f"POST /api/py/get_lat_lon endpoint hit with location: {location.location}")
     url = f"https://api.opencagedata.com/geocode/v1/json?q={

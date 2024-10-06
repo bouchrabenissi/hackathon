@@ -1,7 +1,16 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
   const farmerName = "John";
+  const router = useRouter();
 
   return (
     <main className="flex min-h-screen flex-col items-center p-4 max-w-md mx-auto bg-background text-foreground">
@@ -46,9 +55,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full">
+      <section className="w-full mb-6">
         <h2 className="text-xl font-semibold mb-2">Previsions</h2>
-        {/* Add prevision content here */}
+        <Card className="w-full">
+          <CardContent className="pt-6">
+            <h3 className="text-3xl font-bold text-center">Coming Soon</h3>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button onClick={() => router.push("/charts")}>View Details</Button>
+          </CardFooter>
+        </Card>
       </section>
     </main>
   );
