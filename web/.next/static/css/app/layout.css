@@ -540,6 +540,33 @@ video {
     --chart-5: 27 87% 67%;
   }
 
+.dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
 *{
   border-color: hsl(var(--border));
 }
@@ -559,6 +586,10 @@ body{
   margin-left: auto;
   margin-right: auto;
 }
+.my-0\.5{
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+}
 .mb-1{
   margin-bottom: 0.25rem;
 }
@@ -577,9 +608,6 @@ body{
 .mt-1{
   margin-top: 0.25rem;
 }
-.mt-4{
-  margin-top: 1rem;
-}
 .block{
   display: block;
 }
@@ -589,8 +617,23 @@ body{
 .inline-flex{
   display: inline-flex;
 }
+.grid{
+  display: grid;
+}
+.aspect-video{
+  aspect-ratio: 16 / 9;
+}
+.aspect-square{
+  aspect-ratio: 1 / 1;
+}
 .h-10{
   height: 2.5rem;
+}
+.h-2{
+  height: 0.5rem;
+}
+.h-2\.5{
+  height: 0.625rem;
 }
 .h-4{
   height: 1rem;
@@ -607,14 +650,32 @@ body{
 .h-9{
   height: 2.25rem;
 }
+.h-\[400px\]{
+  height: 400px;
+}
 .h-\[812px\]{
   height: 812px;
 }
 .h-full{
   height: 100%;
 }
+.max-h-\[250px\]{
+  max-height: 250px;
+}
 .min-h-screen{
   min-height: 100vh;
+}
+.w-0{
+  width: 0px;
+}
+.w-1{
+  width: 0.25rem;
+}
+.w-2{
+  width: 0.5rem;
+}
+.w-2\.5{
+  width: 0.625rem;
 }
 .w-4{
   width: 1rem;
@@ -631,8 +692,17 @@ body{
 .w-full{
   width: 100%;
 }
+.min-w-\[8rem\]{
+  min-width: 8rem;
+}
+.max-w-3xl{
+  max-width: 48rem;
+}
 .max-w-md{
   max-width: 28rem;
+}
+.flex-1{
+  flex: 1 1 0%;
 }
 .flex-shrink-0{
   flex-shrink: 0;
@@ -646,17 +716,44 @@ body{
 .cursor-pointer{
   cursor: pointer;
 }
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
 .flex-col{
   flex-direction: column;
+}
+.flex-wrap{
+  flex-wrap: wrap;
 }
 .items-start{
   align-items: flex-start;
 }
+.items-end{
+  align-items: flex-end;
+}
 .items-center{
   align-items: center;
 }
+.items-stretch{
+  align-items: stretch;
+}
+.justify-start{
+  justify-content: flex-start;
+}
 .justify-center{
   justify-content: center;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.gap-1\.5{
+  gap: 0.375rem;
+}
+.gap-2{
+  gap: 0.5rem;
+}
+.gap-4{
+  gap: 1rem;
 }
 .space-y-1\.5 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
@@ -676,6 +773,9 @@ body{
 }
 .whitespace-nowrap{
   white-space: nowrap;
+}
+.rounded-\[2px\]{
+  border-radius: 2px;
 }
 .rounded-\[40px\]{
   border-radius: 40px;
@@ -701,6 +801,18 @@ body{
 .border-2{
   border-width: 2px;
 }
+.border-\[1\.5px\]{
+  border-width: 1.5px;
+}
+.border-dashed{
+  border-style: dashed;
+}
+.border-\[--color-border\]{
+  border-color: var(--color-border);
+}
+.border-border\/50{
+  border-color: hsl(var(--border) / 0.5);
+}
 .border-destructive{
   border-color: hsl(var(--destructive));
 }
@@ -719,6 +831,9 @@ body{
 }
 .border-transparent{
   border-color: transparent;
+}
+.bg-\[--color-bg\]{
+  background-color: var(--color-bg);
 }
 .bg-background{
   background-color: hsl(var(--background));
@@ -759,6 +874,12 @@ body{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.fill-foreground{
+  fill: hsl(var(--foreground));
+}
+.fill-muted-foreground{
+  fill: hsl(var(--muted-foreground));
+}
 .p-4{
   padding: 1rem;
 }
@@ -767,6 +888,10 @@ body{
 }
 .p-\[12px\]{
   padding: 12px;
+}
+.px-2\.5{
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 .px-3{
   padding-left: 0.75rem;
@@ -784,6 +909,10 @@ body{
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
+.py-1\.5{
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
 .py-2{
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -792,11 +921,27 @@ body{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+.px-0{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.pb-3{
+  padding-bottom: 0.75rem;
+}
 .pt-0{
   padding-top: 0px;
 }
+.pt-3{
+  padding-top: 0.75rem;
+}
+.pb-0{
+  padding-bottom: 0px;
+}
 .text-center{
   text-align: center;
+}
+.font-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 .text-2xl{
   font-size: 1.5rem;
@@ -818,6 +963,10 @@ body{
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
 .font-bold{
   font-weight: 700;
 }
@@ -826,6 +975,10 @@ body{
 }
 .font-semibold{
   font-weight: 600;
+}
+.tabular-nums{
+  --tw-numeric-spacing: tabular-nums;
+  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 .leading-6{
   line-height: 1.5rem;
@@ -867,6 +1020,13 @@ body{
 .text-secondary-foreground{
   color: hsl(var(--secondary-foreground));
 }
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.text-foreground\/50{
+  color: hsl(var(--foreground) / 0.5);
+}
 .underline-offset-4{
   text-underline-offset: 4px;
 }
@@ -897,6 +1057,9 @@ body{
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.filter{
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .transition-colors{
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
@@ -964,6 +1127,14 @@ body{
 
 .placeholder\:text-muted-foreground::placeholder{
   color: hsl(var(--muted-foreground));
+}
+
+.first\:fill-muted:first-child{
+  fill: hsl(var(--muted));
+}
+
+.last\:fill-background:last-child{
+  fill: hsl(var(--background));
 }
 
 .hover\:bg-accent:hover{
@@ -1058,6 +1229,13 @@ body{
   color: rgb(253 186 116 / var(--tw-text-opacity));
 }
 
+@media (min-width: 768px){
+
+  .md\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 .\[\&\>svg\+div\]\:translate-y-\[-3px\]>svg+div{
   --tw-translate-y: -3px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1075,6 +1253,22 @@ body{
   top: 1rem;
 }
 
+.\[\&\>svg\]\:h-2\.5>svg{
+  height: 0.625rem;
+}
+
+.\[\&\>svg\]\:h-3>svg{
+  height: 0.75rem;
+}
+
+.\[\&\>svg\]\:w-2\.5>svg{
+  width: 0.625rem;
+}
+
+.\[\&\>svg\]\:w-3>svg{
+  width: 0.75rem;
+}
+
 .\[\&\>svg\]\:text-destructive>svg{
   color: hsl(var(--destructive));
 }
@@ -1083,8 +1277,63 @@ body{
   color: hsl(var(--foreground));
 }
 
+.\[\&\>svg\]\:text-muted-foreground>svg{
+  color: hsl(var(--muted-foreground));
+}
+
 .\[\&\>svg\~\*\]\:pl-7>svg~*{
   padding-left: 1.75rem;
+}
+
+.\[\&_\.recharts-cartesian-axis-tick_text\]\:fill-muted-foreground .recharts-cartesian-axis-tick text{
+  fill: hsl(var(--muted-foreground));
+}
+
+.\[\&_\.recharts-cartesian-grid_line\[stroke\=\'\#ccc\'\]\]\:stroke-border\/50 .recharts-cartesian-grid line[stroke='#ccc']{
+  stroke: hsl(var(--border) / 0.5);
+}
+
+.\[\&_\.recharts-curve\.recharts-tooltip-cursor\]\:stroke-border .recharts-curve.recharts-tooltip-cursor{
+  stroke: hsl(var(--border));
+}
+
+.\[\&_\.recharts-dot\[stroke\=\'\#fff\'\]\]\:stroke-transparent .recharts-dot[stroke='#fff']{
+  stroke: transparent;
+}
+
+.\[\&_\.recharts-layer\]\:outline-none .recharts-layer{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.\[\&_\.recharts-polar-grid_\[stroke\=\'\#ccc\'\]\]\:stroke-border .recharts-polar-grid [stroke='#ccc']{
+  stroke: hsl(var(--border));
+}
+
+.\[\&_\.recharts-radial-bar-background-sector\]\:fill-muted .recharts-radial-bar-background-sector{
+  fill: hsl(var(--muted));
+}
+
+.\[\&_\.recharts-rectangle\.recharts-tooltip-cursor\]\:fill-muted .recharts-rectangle.recharts-tooltip-cursor{
+  fill: hsl(var(--muted));
+}
+
+.\[\&_\.recharts-reference-line_\[stroke\=\'\#ccc\'\]\]\:stroke-border .recharts-reference-line [stroke='#ccc']{
+  stroke: hsl(var(--border));
+}
+
+.\[\&_\.recharts-sector\[stroke\=\'\#fff\'\]\]\:stroke-transparent .recharts-sector[stroke='#fff']{
+  stroke: transparent;
+}
+
+.\[\&_\.recharts-sector\]\:outline-none .recharts-sector{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.\[\&_\.recharts-surface\]\:outline-none .recharts-surface{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .\[\&_p\]\:leading-relaxed p{
