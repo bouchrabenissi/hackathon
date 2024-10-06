@@ -5,8 +5,8 @@
 - __Output__: Graphique à barres montrant le nombre de précipitation (PRECTOTCORR > 0) 
 - __Description__: Cette visualisation montre la fréquence des jours de pluie 
 - _Chart title_: "Total Precipitation Frequency"
-- _X-axis_: "Date" (or "Days" if you're showing a range of days)
-- _Y-axis_: "Number of Precipitation Days" (or simply "Precipitation Amount (mm)" if you prefer to show the actual precipitation values)
+  _X-axis_: "Date" (or "Days" if you're showing a range of days)
+  _Y-axis_: "Number of Precipitation Days" (or simply "Precipitation Amount (mm)" if you prefer to show the actual precipitation values)
 ____________________________________________________________________________
 # Tempétature:
 
