@@ -1,7 +1,4 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +12,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+        <div className="iphone-frame relative bg-black rounded-[50px] w-[375px] h-[812px] p-[12px] shadow-xl">
+          <div className="iphone-screen bg-white rounded-[40px] w-full h-full overflow-hidden">
+            <div className="iphone-content h-full overflow-y-auto">
+              {children}
+            </div>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

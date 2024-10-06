@@ -1,122 +1,184 @@
-import Image from "next/image";
-import Link from "next/link";
+import { AlertCircle, Sun, Wind, Droplets, Thermometer } from "lucide-react";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
+  const farmerName = "John";
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing FastApi API&nbsp;
-          <Link href="/api/py/helloFastApi">
-            <code className="font-mono font-bold">api/index.py</code>
-          </Link>
-        </p>
-        <p className="fixed right-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing Next.js API&nbsp;
-          <Link href="/api/helloNextJs">
-            <code className="font-mono font-bold">app/api/helloNextJs</code>
-          </Link>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="flex min-h-screen flex-col items-center p-4 max-w-md mx-auto bg-background text-foreground">
+      <h1 className="text-2xl font-bold mb-4">Hey {farmerName}</h1>
+
+      <section className="w-full mb-6">
+        <h2 className="text-xl font-semibold mb-2">
+          Today&apos;s News on your crops
+        </h2>
+      </section>
+
+      <section className="w-full mb-6">
+        <h2 className="text-xl font-semibold mb-2">Alerts</h2>
+        <div className="space-y-4">
+          <ColoredAlert
+            icon={WindIcon}
+            title="Wind Speed"
+            message="Moderate to strong wind speed: Check for damage and use windbreaks."
+            severity="warning"
+          />
+
+          <ColoredAlert
+            icon={HumidityIcon}
+            title="Humidity"
+            message="Moderate humidity: Generally favorable for growth. Maintain regular watering and check soil moisture."
+            severity="success"
+          />
+
+          <ColoredAlert
+            icon={SunIcon}
+            title="Solar Radiation"
+            message="High radiation: Monitor soil moisture and water crops adequately."
+            severity="warning"
+          />
+
+          <ColoredAlert
+            icon={TemperatureIcon}
+            title="Temperature"
+            message="High: Increased evaporation. Monitor for water stress and adjust watering."
+            severity="warning"
+          />
         </div>
-      </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <section className="w-full">
+        <h2 className="text-xl font-semibold mb-2">Previsions</h2>
+        {/* Add prevision content here */}
+      </section>
     </main>
   );
 }
+
+interface ColoredAlertProps {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  title: string;
+  message: string;
+  severity: "success" | "warning" | "danger";
+}
+
+function ColoredAlert({
+  icon: Icon,
+  title,
+  message,
+  severity,
+}: ColoredAlertProps) {
+  const severityClasses = {
+    success: "bg-primary/20 border-primary",
+    warning: "bg-orange-500/20 border-orange-500",
+    danger: "bg-destructive/20 border-destructive",
+  };
+
+  const textColors = {
+    success: "text-primary",
+    warning: "text-orange-700 dark:text-orange-300",
+    danger: "text-destructive",
+  };
+
+  return (
+    <div
+      className={cn(
+        severityClasses[severity],
+        "border rounded-lg p-4 flex items-start"
+      )}>
+      <div className="flex-shrink-0 mr-4">
+        <Icon className={cn("h-6 w-6", textColors[severity])} />
+      </div>
+      <div>
+        <h3 className={cn("font-semibold leading-6", textColors[severity])}>
+          {title}
+        </h3>
+        <p className="text-foreground/80 mt-1">{message}</p>
+      </div>
+    </div>
+  );
+}
+
+const SunIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
+    <path fill="currentColor" d="M18 12a6 6 0 1 1-12 0a6 6 0 0 1 12 0" />
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12 1.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0V2a.75.75 0 0 1 .75-.75M1.25 12a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5H2a.75.75 0 0 1-.75-.75m19 0a.75.75 0 0 1 .75-.75h1a.75.75 0 0 1 0 1.5h-1a.75.75 0 0 1-.75-.75M12 20.25a.75.75 0 0 1 .75.75v1a.75.75 0 0 1-1.5 0v-1a.75.75 0 0 1 .75-.75"
+      clipRule="evenodd"
+    />
+    <path
+      fill="currentColor"
+      d="M4.398 4.398a.75.75 0 0 1 1.061 0l.393.393a.75.75 0 0 1-1.06 1.06l-.394-.392a.75.75 0 0 1 0-1.06m15.202 0a.75.75 0 0 1 0 1.06l-.392.393a.75.75 0 0 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.06 0m-1.453 13.748a.75.75 0 0 1 1.061 0l.393.393a.75.75 0 0 1-1.06 1.06l-.394-.392a.75.75 0 0 1 0-1.06m-12.295 0a.75.75 0 0 1 0 1.06l-.393.393a.75.75 0 1 1-1.06-1.06l.392-.393a.75.75 0 0 1 1.06 0"
+      opacity=".5"
+    />
+  </svg>
+);
+
+const WindIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeWidth="1.5">
+      <path d="M3 8h6.5A2.5 2.5 0 1 0 7 5.5v.357M4 14h14.5a3.5 3.5 0 1 1-3.5 3.5V17" />
+      <path d="M2 11h16.5A3.5 3.5 0 1 0 15 7.5V8" opacity=".5" />
+    </g>
+  </svg>
+);
+
+const HumidityIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      transform="scale(1.1) translate(-1.2, -1.2)">
+      <path
+        strokeLinecap="round"
+        d="M6.286 19C3.919 19 2 17.104 2 14.765s1.919-4.236 4.286-4.236q.427.001.83.08m7.265-2.582a5.8 5.8 0 0 1 1.905-.321c.654 0 1.283.109 1.87.309m-11.04 2.594a5.6 5.6 0 0 1-.354-1.962C6.762 5.528 9.32 3 12.476 3c2.94 0 5.361 2.194 5.68 5.015m-11.04 2.594a4.3 4.3 0 0 1 1.55.634m9.49-3.228C20.392 8.78 22 10.881 22 13.353c0 2.707-1.927 4.97-4.5 5.52"
+        opacity=".5"
+      />
+      <path d="M15 19.084C15 20.694 13.657 22 12 22s-3-1.305-3-2.916c0-.912.961-2.1 1.796-2.96a1.665 1.665 0 0 1 2.408 0c.835.86 1.796 2.048 1.796 2.96Z" />
+    </g>
+  </svg>
+);
+
+const TemperatureIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}>
+    <g transform="scale(1.1) translate(-1.2, -1.2)">
+      <path
+        fill="currentColor"
+        d="M17.5 16.5a5.5 5.5 0 1 1-8.939-4.293c.264-.211.439-.521.439-.86V5a3 3 0 1 1 6 0v6.348c0 .338.175.648.439.86A5.49 5.49 0 0 1 17.5 16.5"
+        opacity=".5"
+      />
+      <path
+        fill="currentColor"
+        d="M12.75 5a.75.75 0 0 0-1.5 0v8.38c0 .437-.297.808-.658 1.054a2.5 2.5 0 1 0 2.816 0c-.36-.246-.658-.617-.658-1.054z"
+      />
+    </g>
+  </svg>
+);
