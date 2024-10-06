@@ -17,6 +17,10 @@ ____________________________________________________________________________
 _X-axis_: This chart typically doesn't require an x-axis as it is a gauge; instead, you might label the sections directly on the gauge itself (e.g., "Low," "Moderate," "High").
 _Y-axis_: Similarly, a traditional y-axis is not necessary for a gauge chart. However, you can annotate temperature ranges (e.g., "0°C to 40°C") along the gauge.
 
+Can be a line chart as well for the temparature over time:
+- __Input__: T2M, Date
+- __Output__: Line Chart
+
 ____________________________________________________________________________
 # Humidité:
 	
