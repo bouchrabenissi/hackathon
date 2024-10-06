@@ -15,3 +15,5 @@
   - [Appears Github repo](https://github.com/nasa/AppEEARS-Data-Resources)
   - [LP DAAC E-Learning page](https://lpdaac.usgs.gov/resources/e-learning/#appeears)
 - [hdf file](https://drive.google.com/drive/folders/1_IgUCU3AbFLrC79_TqNNr-BD0uyShwm7)
+
+https://docs.google.com/document/d/1wv01aDYVn8gOLsT9CSWyRJbJ6wiKdJKZjcnV_9vO-uk/edit?usp=sharing
