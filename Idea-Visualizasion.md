@@ -34,7 +34,7 @@ ____________________________________________________________________________
 - __Input__: T2M, WS2M, RH2M, PRECTOTCORR, ALLSKY_SFC_SW_DWN
 - __Output__: Radar Chart
 - __Description__: This radar chart gives farmers a clear view of weather conditions, helping with decisions on planting, irrigation, and crop protection. It visualizes key factors like temperature, wind speed, humidity, precipitation, and solar radiation, making it easy to assess if the weather is favorable or if adjustments are needed. 
-- _The Chart title_: Weather Conditions Overview for Farmers
+- _Chart title_: Weather Conditions Overview for Farmers
 _The name of the parameters_:
 T2M: Temperature
 WS2M: Wind Speed
