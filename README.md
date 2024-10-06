@@ -1,5 +1,7 @@
 # NASA Space Apps 2024
 
+Crop-IT is an innovative application designed for farmers to stay informed about current weather conditions and more. It provides timely recommendations and warnings when environmental factors, such as temperature, precipitation, humidity, wind speed, and solar radiation, exceed normal thresholds, ensuring proactive decision-making. In addition to real-time updates, Crop-IT analyzes historical data and offers predictive insights, empowering farmers to optimize their agricultural practices. With its advanced analytics and visualization tools, Crop-IT promotes sustainable farming and enhances resilience to climate challenges.
+
 ## Our API endpoint
 
 - [Power API](https://power.larc.nasa.gov/api/pages/?urls.primaryName=Manager)
